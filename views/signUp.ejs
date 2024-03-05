@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register Page</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+      body {
+        background: linear-gradient(0deg, black, transparent);
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        justify-content: center;
+        margin: auto;
+        /* Reset margin to ensure full height */
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="status"></div>
+    <div
+      class="container p-4" 
+      style="
+      background: white;
+       border-radius: 2em; 
+       border: 2px solid rgba(255, 255, 255, 0.05);
+        background-clip: padding-box;
+         box-shadow: 10px 10px 10px rgba(46, 54, 68, 0.03);
+         max-width: 23rem;
+         margin-top: 0rem;
+    
+      "
+    >
+      <form id="signupForm" onsubmit="signupRequest(event)">
+        <!-- <h3 class="mb-4 text-center">Sign up on <u>TheDumy</u></h3> -->
+        <h2 class="text-center"><u>SignUp</u></h2>
+        <div class="mb-3">
+          <label for="username" class="form-label">Name</label>
+          <input
+            type="text"
+            name="userName"
+            class="form-control shadow"
+            id="username"
+            placeholder="Enter your username"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="username" class="form-label">Email</label>
+          <input
+            type="email"
+            name="email"
+            class="form-control shadow"
+            id="email"
+            placeholder="Enter your email"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input
+            type="password"
+            name="password"
+            class="form-control shadow"
+            id="password"
+            placeholder="Enter your password"
+            required
+          />
+        </div>
+
+        <div class="mb-3">
+          <div class="form-check">
+            <input
+            style="margin-top: 0.4rem;"
+              type="checkbox"
+              class="form-check-input"
+              id="rememberMe"
+              required
+            />
+            <label class="form-check-label" for="form2Example3g">
+              I agree all statements in
+              <a
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModal"
+                class="text-primary"
+                >Terms of service.</a
+              >
+            </label>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary mb-3 shadow">
+          SignUp
+        </button>
+
+        <div class="m-auto text-center">
+          <p class="text-muted">
+            Already have an account? <a href="login">Sign in here!</a>
+          </p>
+        </div>
+      </form>
+    </div>
+    <div
+      class="modal fade"
+      id="exampleModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title m-auto" id="exampleModalLabel">
+              Terms & Conditions
+            </h4>
+            <button
+              class="btn-close rounded"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            >
+              <span><i class="bi bi-x-lg fw-bold"></i></span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p class="p-3 rounded">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              Assumenda, molestias rerum! Sint fuga minus molestiae ducimus illo
+              quaerat, dolore voluptatem suscipit quas. Quam dolores, doloribus
+              voluptatum aliquid rem reprehenderit possimus!
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <div id="regiStatus" class="alert mt-1 mb-0 alert-warning" role="alert">
+      <p class="mb-0 text-center text-danger"> &#9888; &#42;One or more required field(s) are missing!</p>
+      </div>
+      <div class="progress" role="progressbar" aria-label="Example 3px high" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="height: 0.5rem">
+        <div id="percent" class="progress-bar" style="width: 0%"></div>
+      </div> -->
+      <!-- <button onclick="btn()" class="btn btn-primary">hel</button> -->
+    <script>
+      async function signupRequest(event) {
+        event.preventDefault();
+        const apiUrl = "http://localhost:3000/regi";
+
+        const uName = document.getElementById("username").value.trim();
+        const mail = document.getElementById("email").value.trim();
+        const pass = document.getElementById("password").value.trim();
+
+        if (uName === "" || mail === "" || pass === "") {
+          let status = document.getElementById("status");
+          status.innerHTML = `<div id="regiStatus" class="alert mt-1 mb-0 alert-warning" role="alert">
+          <p class="mb-0 text-center text-danger"> &#9888; &#42;One or more required field(s) are missing!</p>
+          </div>
+          <div class="progress mb-2" role="progressbar" aria-label="Example 3px high" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="height: 0.5rem">
+          <div id="percent" class="progress-bar" style="width: 0%; background: #6ab9c3;"></div>
+          </div>`;
+          setTimeout(btn, 1000);
+          return;
+        }
+
+        const postData = {
+          userName: uName,
+          email: mail,
+          password: pass,
+        };
+
+        try {
+          const response = await fetch(apiUrl, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(postData),
+          });
+
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+
+          const result = await response.json();
+          console.log("Response from server:", result);
+          let status = document.getElementById("status");
+          console.log(result.status);
+          if (result.status === "User exists") {
+            status.innerHTML = `<div id="regiStatus" class="alert mt-1 mb-0 alert-warning" role="alert">
+        <p class="mb-0 text-center"> &#9888; A user with that email already exists. Try with different email !</p>
+        </div>
+        <div class="progress mb-2" role="progressbar" aria-label="Example 3px high" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="height: 0.5rem">
+        <div id="percent" class="progress-bar" style="width: 0%; background: #6ab9c3;"></div>
+        </div>`;
+          } else {
+            status.innerHTML = `<div id="regiStatus" class="alert mt-1 mb-0 alert-success" role="alert">
+        <p class="mb-0 text-center"> &#9989; Congratulation ${postData.userName}, You Are Register Successfully !</p>
+        </div>
+        <div class="progress mb-2" role="progressbar" aria-label="Example 3px high" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="height: 0.5rem">
+        <div id="percent" class="progress-bar" style="width: 0%; background: #6ab9c3;"></div>
+        </div>`;
+          }
+          document.getElementById("username").value = "";
+          document.getElementById("email").value = "";
+          document.getElementById("password").value = "";
+          document.getElementById("rememberMe").checked = false;
+        } catch (error) {
+          console.error("Error sending POST request:", error);
+          let status = document.getElementById("status");
+          status.innerHTML = `<div id="regiStatus" class="alert mt-1 mb-0 alert-danger" role="alert">
+        <p class="mb-0 text-center">&#10060; There was an error, Please check your internet connection or try later !</p>
+        </div>
+        <div class="progress mb-2" role="progressbar" aria-label="Example 3px high" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="height: 0.5rem">
+        <div id="percent" class="progress-bar" style="width: 0%; background: #6ab9c3;"></div>
+        </div>`;
+        }
+        setTimeout(btn, 1000);
+      }
+      function statusClose(){
+        document.getElementById("status").innerHTML = '';
+      }
+      let size = 10;
+      function btn(){
+        document.getElementById("percent").style.width = size + '%';
+        if(size === 100){
+          size = 0;
+          setTimeout(statusClose, 2000);
+         return;
+        }
+        size = size + 10;
+        setTimeout(btn, 100);
+      }
+    </script>
+  </body>
+</html>

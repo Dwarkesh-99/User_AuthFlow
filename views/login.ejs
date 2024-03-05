@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LoginPage</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+      body {
+        background: linear-gradient(0deg, black, transparent);
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        justify-content: center;
+        margin: auto; /* Reset margin to ensure full height */
+      }
+    </style>
+  </head>
+  <body>
+    <div id="status"></div>
+    <div
+      class="container p-4"
+      style="
+        border-radius: 1.2rem;
+        max-width: 23rem;
+        background-color: rgb(249, 249, 249);
+        border: 1px solid black;
+      "
+    >
+      <form onsubmit="loginRequest(event)">
+        <h2 class="mb-4 text-center"><u>Login</u></h2>
+
+        <div class="mb-3">
+          <label for="username" class="form-label">Username</label>
+          <input
+            type="text"
+            class="form-control shadow"
+            id="email"
+            placeholder="Enter your email"
+            required
+          />
+        </div>
+
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input
+            type="password"
+            class="form-control shadow"
+            id="password"
+            placeholder="Enter your password"
+            suggested="current-password"
+            required
+          />
+        </div>
+        <!--  -->
+        <div
+          class="row rounded mb-3"
+          style="
+            background: #80808029;
+            padding: 0.5rem;
+            border: 1px solid #00000059;
+            max-width: 20rem;
+            margin: auto;
+          "
+        >
+          <div id="captchaMessage" class="col form-group form-check mx-3">
+            <input
+              type="checkbox"
+              placeholder="Verified that you're human !"
+              onclick="validateCaptcha()"
+              class="form-check-input mt-3"
+              id="captchaCheckbox"
+              style="transform: scale(2)"
+              required
+            />
+            &nbsp;<label class="form-check-label mt-2" for="captchaCheckbox"
+              >I'm not a robot</label
+            >
+          </div>
+          <img
+            class="navbar-brand"
+            src="https://logodownload.org/wp-content/uploads/2019/07/recaptcha-logo-1.png"
+            alt="reCaptcha"
+            height="40"
+          />
+        </div>
+        <!--  -->
+        <div class="row mb-3">
+          <div class="col">
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" id="rememberMe" />
+              <label class="form-check-label" for="rememberMe"
+                >Remember me</label
+              >
+            </div>
+          </div>
+          <div class="col text-end">
+            <a
+              type="button"
+              class="text-muted"
+              data-bs-toggle="modal"
+              data-bs-target="#staticBackdrop"
+              >Forgot Password?</a
+            >
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary mb-3 shadow">Login</button>
+        <div class="m-auto text-center">
+          <p class="text-muted">
+            Don't have an account? <a href="signUp"><u>Sign Up</u></a>
+          </p>
+        </div>
+      </form>
+      <div
+        class="modal fade"
+        id="staticBackdrop"
+        data-bs-backdrop="static"
+        data-bs-keyboard="false"
+        tabindex="-1"
+        aria-labelledby="staticBackdropLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title m-auto" id="staticBackdropLabel">
+                Modal title
+              </h4>
+            </div>
+            <div class="modal-body">
+              <div class="mb-3">
+                <label for="username" class="form-label"
+                  >Email<span class="text-danger">*</span></label
+                >
+                <input
+                  type="text"
+                  class="form-control shadow"
+                  id="emailId"
+                  placeholder="Enter your email"
+                  required
+                />
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+              <button type="button" class="btn btn-primary">Understood</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      function validateCaptcha() {
+        const captchaCheckbox = document.getElementById("captchaCheckbox");
+        const captchaMessage = document.getElementById("captchaMessage");
+        if (captchaCheckbox.checked) {
+          captchaMessage.innerHTML = `<span class="form-check-input mt-2 text-success" id="captchaCheckbox" style="transform: scale(2.5);"><i class="bi bi-check2 "></i></span>
+            &nbsp;&nbsp;<label class="form-check-label mt-2" for="captchaCheckbox">You're not a robot</label>`;
+        }
+      }
+
+      async function loginRequest(event) {
+        event.preventDefault();
+        const apiUrl = "http://localhost:3000/login";
+
+        const mail = document.getElementById("email").value.trim();
+        const pass = document.getElementById("password").value.trim();
+
+        if (mail === "" || pass === "") {
+          let status = document.getElementById("status");
+          status.innerHTML = `<div id="regiStatus" class="alert mt-1 alert-warning" role="alert">
+          <p class="mb-0 text-center text-danger"> &#9888; &#42;One or more required field(s) are missing!</p>
+          </div>`;
+          setTimeout(statusClose, 4000);
+          return;
+        }
+        const postData = {
+          email: mail.toLowerCase(),
+          password: pass,
+        };
+
+        try {
+          const response = await fetch(apiUrl, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(postData),
+          });
+
+          document.getElementById("email").value = "";
+          document.getElementById("password").value = "";
+          document.getElementById("rememberMe").checked = false;
+          document.getElementById("captchaMessage").innerHTML = `<input
+              type="checkbox"
+              placeholder="Verified that you're human !"
+              onclick="validateCaptcha()"
+              class="form-check-input mt-3"
+              id="captchaCheckbox"
+              style="transform: scale(2)"
+              required
+            />
+            &nbsp;<label class="form-check-label mt-2" for="captchaCheckbox"
+              >I'm not a robot</label
+            >`;
+          if (!response.ok) {
+            if (response.status === 401) {
+              document.getElementById("status").innerHTML = `<div id="regiStatus" class="alert mt-1 alert-danger" role="alert">
+            <p class="mb-0 text-center text-danger"> &#10060; Your Email or Password is incorrect!</p>
+            </div>`;
+            }else{
+              document.getElementById("status").innerHTML = `<div id="regiStatus" class="alert mt-1 alert-danger" role="alert">
+            <p class="mb-0 text-center">&#10060; There was an error, Please check your internet connection or try later !</p>
+            </div>`;
+            }
+            throw new Error(message.message);
+          }
+          const result = await response.json();
+          console.log("Response from server:", result);
+          if (result.auth) {
+            localStorage.setItem("token", result.auth);
+            localStorage.setItem("user", JSON.stringify(result.user));
+            const token = localStorage.getItem("token");
+            window.location.href = `/home?auth=${token}`;
+          }
+        } catch (error) {
+          console.error("Error sending POST request:", error);
+        }
+        setTimeout(statusClose, 4000);
+      }
+      function statusClose(){
+        document.getElementById("status").innerHTML = '';
+      }
+    </script>
+  </body>
+</html>
