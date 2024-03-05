@@ -2,10 +2,10 @@
 User_AuthFlow is a user authentication system built using Node.js, Express, MongoDB, and EJS. It provides functionalities for user signup, signin, password reset, and authentication using JWT tokens.
 
 ## Features
-Signup: Users can create a new account by providing their email and password.
-Signin: Registered users can sign in with their email and password.
-Password Reset: Users can request a password reset if they forget their password.
-Authentication: JWT tokens are used to authenticate users and provide secure access to protected routes.
+- Signup: Users can create a new account by providing their email and password.
+- Signin: Registered users can sign in with their email and password.
+- Password Reset: Users can request a password reset if they forget their password.
+- Authentication: JWT tokens are used to authenticate users and provide secure access to protected routes.
 
 ## Technologies Used
 - Node.js: JavaScript runtime environment for server-side logic.
