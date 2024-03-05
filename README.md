@@ -18,7 +18,7 @@ EJS: Embedded JavaScript templates for rendering dynamic HTML pages.
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/your-username/user_authflow.git
+   git clone https://github.com/Dwarkesh-99/User_AuthFlow.git
    ```
 
 2. Navigate to the project directory:
