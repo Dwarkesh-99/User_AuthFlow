@@ -1,7 +1,7 @@
 {
   "name": "y",
   "version": "1.0.0",
-  "description": "",
+  "description": "User_AuthFlow is a user authentication system built using Node.js, Express, MongoDB, and EJS. It provides functionalities for user signup, signin, password reset, and authentication using JWT tokens.",
   "main": "app.js",
   "scripts": {
     "start": "app.js",
@@ -10,7 +10,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
+    "crypto": "^1.0.1",
     "ejs": "^3.1.9",
     "express": "^4.18.2",
     "express-session": "^1.18.0",
