@@ -8,10 +8,10 @@ Password Reset: Users can request a password reset if they forget their password
 Authentication: JWT tokens are used to authenticate users and provide secure access to protected routes.
 
 ## Technologies Used
-Node.js: JavaScript runtime environment for server-side logic.
-Express: Web application framework for Node.js to build robust APIs and web applications.
-MongoDB: NoSQL database for storing user information securely.
-EJS: Embedded JavaScript templates for rendering dynamic HTML pages.
+- Node.js: JavaScript runtime environment for server-side logic.
+- Express: Web application framework for Node.js to build robust APIs and web applications.
+- MongoDB: NoSQL database for storing user information securely.
+- EJS: Embedded JavaScript templates for rendering dynamic HTML pages.
 
 ## Installation
 
