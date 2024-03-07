@@ -128,6 +128,21 @@ app.post("/regi", async (req, res) => {
   }
 });
 
+app.post("/getPass", async(req, res) => {
+  console.log(req.body);
+  try {
+    const isUser = await UserSignup.findOne({ email: req.body.email });
+    if (isUser) {
+      // User already exists
+      return res.status(200).send({status : `Your password is ${isUser.password} !`});
+    }else{
+      return res.status(404).send({status : 'No user found with given mail address!'});
+    }
+  }catch(error) {
+    res.status(500).send({ status: "There was an Internal Server Error, try after sometime!" });
+  } 
+});
+
 const port = 3000;
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);

@@ -107,9 +107,10 @@
           <div class="col text-end">
             <a
               type="button"
-              class="text-muted"
+              class=""
               data-bs-toggle="modal"
               data-bs-target="#staticBackdrop"
+              onclick="clearFun()"
               >Forgot Password?</a
             >
           </div>
@@ -118,7 +119,7 @@
         <button type="submit" class="btn btn-primary mb-3 shadow">Login</button>
         <div class="m-auto text-center">
           <p class="text-muted">
-            Don't have an account? <a href="signUp"><u>Sign Up</u></a>
+            Don't have an account? <a href="signUp">Sign Up here!</a>
           </p>
         </div>
       </form>
@@ -135,7 +136,7 @@
           <div class="modal-content">
             <div class="modal-header">
               <h4 class="modal-title m-auto" id="staticBackdropLabel">
-                Modal title
+                Forgot Password
               </h4>
             </div>
             <div class="modal-body">
@@ -144,12 +145,16 @@
                   >Email<span class="text-danger">*</span></label
                 >
                 <input
-                  type="text"
+                  type="email"
                   class="form-control shadow"
                   id="emailId"
                   placeholder="Enter your email"
                   required
                 />
+                <p id="isEmpty" class="text-danger d-none">
+                  *Field cannot be empty
+                </p>
+                <p id="getStatus" class="text-center"></p>
               </div>
             </div>
             <div class="modal-footer">
@@ -160,13 +165,57 @@
               >
                 Close
               </button>
-              <button type="button" class="btn btn-primary">Understood</button>
+              <button
+                type="button"
+                class="btn btn-primary"
+                onclick="forgetPass()"
+              >
+                Continue
+              </button>
             </div>
           </div>
         </div>
       </div>
     </div>
     <script>
+      async function forgetPass() {
+        const email = document.getElementById("emailId").value.trim();
+        if (email === "") {
+          document.getElementById("getStatus").innerHTML = '';
+          document.getElementById("isEmpty").classList.remove("d-none");
+          return;
+        }
+        document.getElementById("isEmpty").classList.add("d-none");
+        const data = {
+          email: email,
+        };
+        try {
+          const response = await fetch("http://localhost:3000/getPass", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+          });
+          if (!response.ok) {
+            const res = await response.json();
+            document.getElementById("getStatus").innerHTML = `<span class='text-danger'>${res.status}</span>`;
+             throw new Error("Network response was not ok");
+          }
+          const result = await response.json();
+          // console.log(await response);/
+            document.getElementById("getStatus").innerHTML = `<span class='text-success'>${result.status}</span>`;
+        } catch (error) {
+          console.error("There was a problem:", error);
+        }
+      }        
+
+      function clearFun() {
+        document.getElementById("isEmpty").classList.add("d-none");
+        document.getElementById("emailId").value = '';
+        document.getElementById("getStatus").innerHTML = '';
+      }
+
       function validateCaptcha() {
         const captchaCheckbox = document.getElementById("captchaCheckbox");
         const captchaMessage = document.getElementById("captchaMessage");
@@ -222,11 +271,15 @@
             >`;
           if (!response.ok) {
             if (response.status === 401) {
-              document.getElementById("status").innerHTML = `<div id="regiStatus" class="alert mt-1 alert-danger" role="alert">
+              document.getElementById(
+                "status"
+              ).innerHTML = `<div id="regiStatus" class="alert mt-1 alert-danger" role="alert">
             <p class="mb-0 text-center text-danger"> &#10060; Your Email or Password is incorrect!</p>
             </div>`;
-            }else{
-              document.getElementById("status").innerHTML = `<div id="regiStatus" class="alert mt-1 alert-danger" role="alert">
+            } else {
+              document.getElementById(
+                "status"
+              ).innerHTML = `<div id="regiStatus" class="alert mt-1 alert-danger" role="alert">
             <p class="mb-0 text-center">&#10060; There was an error, Please check your internet connection or try later !</p>
             </div>`;
             }
@@ -245,8 +298,8 @@
         }
         setTimeout(statusClose, 4000);
       }
-      function statusClose(){
-        document.getElementById("status").innerHTML = '';
+      function statusClose() {
+        document.getElementById("status").innerHTML = "";
       }
     </script>
   </body>
