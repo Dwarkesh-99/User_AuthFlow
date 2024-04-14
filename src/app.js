@@ -11,6 +11,7 @@ const cors = require("cors");
 app.use(cors());
 const crypto = require("crypto");
 const Jwt = require("jsonwebtoken");
+require("dotenv").config();
 
 const secretKey = crypto.randomBytes(32).toString("hex");
 const jwtKey = secretKey;
@@ -141,9 +142,9 @@ app.post("/getPass", async(req, res) => {
   }catch(error) {
     res.status(500).send({ status: "There was an Internal Server Error, try after sometime!" });
   } 
-});
+});   
 
-const port = 3000;
-app.listen(port, () => {
-  console.log(`Server is running at http://localhost:${port}`);
+// const port = 3000;
+app.listen(process.env.PORT, () => {
+  console.log(`App listening on port ${process.env.PORT}`);
 });
