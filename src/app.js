@@ -11,7 +11,8 @@ const cors = require("cors");
 app.use(cors());
 const crypto = require("crypto");
 const Jwt = require("jsonwebtoken");
-require("dotenv").config();
+const path = require('path');
+require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 
 const secretKey = crypto.randomBytes(32).toString("hex");
 const jwtKey = secretKey;
