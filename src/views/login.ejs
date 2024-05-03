@@ -178,8 +178,14 @@
       </div>
     </div>
     <script>
+      // const path = require('path');
+      // const patt = require('dotenv').config({ path: path.resolve(__dirname, '../../.env') });
+
+      // const port = process.env.PORT
+      // const url = `http://localhost:${port}/getPass`;
       async function forgetPass() {
         const email = document.getElementById("emailId").value.trim();
+
         if (email === "") {
           document.getElementById("getStatus").innerHTML = '';
           document.getElementById("isEmpty").classList.remove("d-none");
@@ -227,6 +233,9 @@
 
       async function loginRequest(event) {
         event.preventDefault();
+        // console.log(url);
+        // console.log(port);
+
         const apiUrl = "http://localhost:3000/login";
 
         const mail = document.getElementById("email").value.trim();

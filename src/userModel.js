@@ -7,6 +7,8 @@ const userSchema = new Schema({
   password: { type: String, required: true, trim: true}
 });
 
-const UserSignup = mongoose.model('UserSignup', userSchema);
+// const UserSignup = mongoose.model('UserSignup', userSchema);
+const UserSignup = mongoose.model('UserRegister', userSchema);
+
 
 module.exports = UserSignup;

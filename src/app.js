@@ -147,5 +147,6 @@ app.post("/getPass", async(req, res) => {
 
 // const port = 3000;
 app.listen(process.env.PORT, () => {
-  console.log(`App listening on port ${process.env.PORT}`);
+  // console.log(`Server is running at http://localhost:${port}`);
+  console.log(`App listening on port http://localhost:${process.env.PORT}`);
 });
