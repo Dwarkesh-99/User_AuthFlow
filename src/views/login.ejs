@@ -196,7 +196,7 @@
           email: email,
         };
         try {
-          const response = await fetch("http://localhost:3000/getPass", {
+          const response = await fetch("/getPass", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -236,7 +236,7 @@
         // console.log(url);
         // console.log(port);
 
-        const apiUrl = "http://localhost:3000/login";
+        const apiUrl = "/login";
 
         const mail = document.getElementById("email").value.trim();
         const pass = document.getElementById("password").value.trim();
